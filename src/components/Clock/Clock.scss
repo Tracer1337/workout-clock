@@ -12,10 +12,18 @@
         transform: rotate(-90deg);
     }
 
-    .time {
+    .content {
         position: absolute;
         top: 50%; left: 50%;
         transform: translate(-50%, -50%);
-        font-size: $size / 4;
+        text-align: center;
+
+        .time {
+            font-size: $size / 4;
+        }
+
+        .title {
+            font-size: $size / 10;
+        }
     }
 }

@@ -18,11 +18,13 @@ const App = () => {
   const runWorkout = async table => {
     for(let row of table) {
       if(row.duration) {
+        clock.current.setTitle(row.label ?? "Pause")
         await clock.current.run(row.duration)
         playSound()
       }
 
       if(row.pause) {
+        clock.current.setTitle("Pause")
         await clock.current.run(row.pause, true)
         playSound()
       }

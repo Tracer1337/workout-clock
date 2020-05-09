@@ -11,9 +11,14 @@ const strokeWidth = 0.02
 class Clock extends React.Component {
     path = React.createRef()
     time = React.createRef()
+    title = React.createRef()
 
     setColor(color) {
         this.path.current.setAttribute("stroke", color)
+    }
+
+    setTitle(title) {
+        this.title.current.textContent = title
     }
 
     setClockProgress(per) {
@@ -64,7 +69,10 @@ class Clock extends React.Component {
                     <path ref={this.path} strokeWidth={strokeWidth} fill="none" />
                 </svg>
 
-                <div className="time" ref={this.time}/>
+                <div className="content">
+                    <div className="time" ref={this.time}/>
+                    <div className="title" ref={this.title}/>
+                </div>
             </div>
         )
     }
