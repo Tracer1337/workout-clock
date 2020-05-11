@@ -16,6 +16,8 @@ const App = () => {
   const [playSound] = useSound(alertSound)
 
   const runWorkout = async table => {
+    await clock.current.run(10, true)
+
     for(let row of table) {
       if(row.duration) {
         clock.current.setTitle(row.label ?? "Pause")
