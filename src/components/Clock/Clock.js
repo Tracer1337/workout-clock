@@ -56,11 +56,6 @@ class Clock extends React.Component {
         })
     }
 
-    componentDidMount() {
-        this.setTitle("Pause")
-        this.time.current.textContent = 60
-    }
-
     render() {
         return (
             <div className="clock">
