@@ -5,7 +5,7 @@ function sound(sound) {
     return () => audio.play()
 }
 
-const factor = 1 / 15
+const factor = 1
 
 async function runWorkout({ spreadsheet, clock, table }) {
     const playSound = sound(alertSound)

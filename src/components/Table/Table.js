@@ -28,6 +28,7 @@ class Table extends React.Component {
     }
 
     componentDidMount() {
+        this.resize()
         window.addEventListener("resize", this.resize)
     }
 
