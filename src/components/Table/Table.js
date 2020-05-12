@@ -1,37 +1,55 @@
-import React, { useEffect, useRef } from "react"
+import React from "react"
 
 import "./Table.scss"
 
-const Table = ({ data }) => {
-    const table = useRef()
+class Table extends React.Component {
+    table = React.createRef()
 
-    useEffect(() => {
-        const rect = table.current.getBoundingClientRect()
+    state = {
+        currentRow: -1
+    }
+
+    setCurrentRow = index => this.setState({ currentRow: index })
+
+    componentDidUpdate() {
+        const currentRow = document.getElementById("row-" + this.state.currentRow)
+
+        if(currentRow) {
+            currentRow.scrollIntoView({ behaviour: "smooth" })
+        }
+    }
+
+    componentDidMount() {
+        const rect = this.table.current.getBoundingClientRect()
         const newHeight = window.innerHeight - rect.y
-        table.current.style.height = newHeight + "px"
-    }, [])
+        this.table.current.style.height = newHeight + "px"
+    }
 
-    return (
-        <div className="table-wrapper" ref={table}>
-            <table>
-                <tbody>
-                    <tr>
-                        <th>Übung</th>
-                        <th>Zeit</th>
-                        <th>Pause</th>
-                    </tr>
-
-                    {data.map(({ label, duration, pause }) => (
+    render() {
+        return (
+            <div className="table-wrapper" ref={this.table}>
+                <table>
+                    <tbody>
                         <tr>
-                            <td>{label}</td>
-                            <td>{duration}</td>
-                            <td>{pause}</td>
+                            <th>Übung</th>
+                            <th>Zeit</th>
+                            <th>Pause</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    )
+
+                        {this.props.data.map(({ label, duration, pause }, i) => (
+                            <tr key={i} className={this.state.currentRow === i ? "current" : ""} id={"row-" + i}>
+                                <td>{label}</td>
+                                <td>{duration}</td>
+                                <td>{pause}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                
+                <div className="spacer"/>
+            </div>
+        )
+    }
 }
 
 export default Table

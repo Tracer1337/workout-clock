@@ -1,37 +1,19 @@
 import React, { useRef, useState } from "react"
-import useSound from "use-sound"
 
 import Clock from "./components/Clock/Clock.js"
 import Table from "./components/Table/Table.js"
 
 import importBinary from "./utils/importBinary.js"
 import parseSpreadsheet from "./utils/parseSpreadsheet.js"
-import alertSound from "./assets/alert.mp3"
+import runWorkout from "./utils/runWorkout.js"
 
 import "./App.scss"
 
 const App = () => {
   const clock = useRef()
+  const tableRef = useRef()
+
   const [table, setTable] = useState()
-  const [playSound] = useSound(alertSound)
-
-  const runWorkout = async table => {
-    await clock.current.run(10, true)
-
-    for(let row of table) {
-      if(row.duration) {
-        clock.current.setTitle(row.label ?? "Pause")
-        await clock.current.run(row.duration)
-        playSound()
-      }
-
-      if(row.pause) {
-        clock.current.setTitle("Pause")
-        await clock.current.run(row.pause, true)
-        playSound()
-      }
-    }
-  }
   
   const handleImport = async () => {
     const binary = await importBinary()
@@ -39,18 +21,26 @@ const App = () => {
     setTable(table)
   }
 
-  const handleStart = () => {
-    runWorkout(table)
-  }
+  const handleStart = runWorkout.bind(null, { 
+    spreadsheet: table,
+    clock,
+    table: tableRef
+  })
 
   return (
     <div className="app">
       <Clock ref={clock}/>
       
-      <button onClick={handleImport}>Import Spreadsheet</button>
-      <button onClick={handleStart}>Start Workout</button>
+      <div className="side-panel">
+        <div className="section">
+          <button onClick={handleImport} className="btn waves-effect waves-light">Import Spreadsheet</button>
+          <button onClick={handleStart} className="btn waves-effect waves-light">Start Workout</button>
+        </div>
 
-      {table && <Table data={table} />}
+        <div className="divider"/>
+
+        {table && <Table data={table} ref={tableRef}/>}
+      </div>
     </div>
   )
 }

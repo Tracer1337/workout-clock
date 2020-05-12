@@ -3,8 +3,8 @@ import React from "react"
 import "./Clock.scss"
 
 const colors = {
-    default: "#1abc9c",
-    pause: "#9b59b6"
+    default: "#009688",
+    pause: "#e91e63"
 }
 const strokeWidth = 0.02
 
@@ -12,6 +12,7 @@ class Clock extends React.Component {
     path = React.createRef()
     time = React.createRef()
     title = React.createRef()
+    subtitle = React.createRef()
 
     setColor(color) {
         this.path.current.setAttribute("stroke", color)
@@ -19,6 +20,10 @@ class Clock extends React.Component {
 
     setTitle(title) {
         this.title.current.textContent = title
+    }
+
+    setSubtitle(subtitle) {
+        this.subtitle.current.textContent = subtitle
     }
 
     setClockProgress(per) {
@@ -66,12 +71,13 @@ class Clock extends React.Component {
         return (
             <div className="clock">
                 <svg viewBox="-1.01, -1.01, 2.02, 2.02">
-                    <path ref={this.path} strokeWidth={strokeWidth} fill="none" />
+                    <path ref={this.path} strokeWidth={strokeWidth} fill="none" strokeLinecap="round"/>
                 </svg>
 
                 <div className="content">
-                    <div className="time" ref={this.time}/>
                     <div className="title" ref={this.title}/>
+                    <div className="time" ref={this.time}/>
+                    <div className="subtitle" ref={this.subtitle}/>
                 </div>
             </div>
         )
