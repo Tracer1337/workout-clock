@@ -5,6 +5,8 @@ function sound(sound) {
     return () => audio.play()
 }
 
+const factor = 1 / 15
+
 async function runWorkout({ spreadsheet, clock, table }) {
     const playSound = sound(alertSound)
 
@@ -21,13 +23,13 @@ async function runWorkout({ spreadsheet, clock, table }) {
 
         if (row.duration) {
             clock.current.setTitle(row.label || "Pause")
-            await clock.current.run(row.duration)
+            await clock.current.run(row.duration * factor)
             playSound()
         }
 
         if (row.pause) {
             clock.current.setTitle("Pause")
-            await clock.current.run(row.pause, true)
+            await clock.current.run(row.pause * factor, true)
             playSound()
         }
     }

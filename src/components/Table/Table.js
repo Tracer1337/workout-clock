@@ -9,7 +9,15 @@ class Table extends React.Component {
         currentRow: -1
     }
 
-    setCurrentRow = index => this.setState({ currentRow: index })
+    setCurrentRow(index) {
+        this.setState({ currentRow: index })
+    }
+
+    resize = () => {
+        const rect = this.table.current.getBoundingClientRect()
+        const newHeight = window.innerHeight - rect.y
+        this.table.current.style.height = newHeight + "px"
+    }
 
     componentDidUpdate() {
         const currentRow = document.getElementById("row-" + this.state.currentRow)
@@ -20,9 +28,7 @@ class Table extends React.Component {
     }
 
     componentDidMount() {
-        const rect = this.table.current.getBoundingClientRect()
-        const newHeight = window.innerHeight - rect.y
-        this.table.current.style.height = newHeight + "px"
+        window.addEventListener("resize", this.resize)
     }
 
     render() {

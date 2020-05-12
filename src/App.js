@@ -28,9 +28,7 @@ const App = () => {
   })
 
   return (
-    <div className="app">
-      <Clock ref={clock}/>
-      
+    <div className="app">      
       <div className="side-panel">
         <div className="section">
           <button onClick={handleImport} className="btn waves-effect waves-light">Import Spreadsheet</button>
@@ -41,6 +39,8 @@ const App = () => {
 
         {table && <Table data={table} ref={tableRef}/>}
       </div>
+
+      <Clock ref={clock}/>
     </div>
   )
 }

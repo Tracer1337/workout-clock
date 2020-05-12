@@ -9,8 +9,8 @@ body {
 .app {
     width: 100vw;
     height: 100vh;
-
     padding: 10px;
+    display: flex;
 
     .side-panel {
         width: 300px;

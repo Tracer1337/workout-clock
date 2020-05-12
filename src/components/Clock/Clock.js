@@ -3,19 +3,19 @@ import React from "react"
 import "./Clock.scss"
 
 const colors = {
-    default: "#009688",
-    pause: "#e91e63"
+    pause: "#009688",
+    default: "#e91e63"
 }
-const strokeWidth = 0.02
 
 class Clock extends React.Component {
-    path = React.createRef()
     time = React.createRef()
     title = React.createRef()
     subtitle = React.createRef()
 
+    color = colors.default
+
     setColor(color) {
-        this.path.current.setAttribute("stroke", color)
+        this.color = color
     }
 
     setTitle(title) {
@@ -27,19 +27,8 @@ class Clock extends React.Component {
     }
 
     setClockProgress(per) {
-        const angle = per * Math.PI * 2
-
-        const newX = Math.cos(-angle)
-        const newY = -Math.sin(-angle)
-
-        const longPath = angle > Math.PI ? 1 : 0
-
-        const newPath = `
-            M 1 0 
-            A 1 1 0 ${longPath} 1 ${newX} ${newY}
-        `
-
-        this.path.current.setAttribute("d", newPath)
+        const gradient = `to right, ${this.color} ${per * 100}%, white ${per * 100}%`
+        document.body.style.background = `linear-gradient(${gradient})`
     }
 
     run(duration, isPause = false) {
@@ -67,13 +56,14 @@ class Clock extends React.Component {
         })
     }
 
+    componentDidMount() {
+        this.setTitle("Pause")
+        this.time.current.textContent = 60
+    }
+
     render() {
         return (
             <div className="clock">
-                <svg viewBox="-1.01, -1.01, 2.02, 2.02">
-                    <path ref={this.path} strokeWidth={strokeWidth} fill="none" strokeLinecap="round"/>
-                </svg>
-
                 <div className="content">
                     <div className="title" ref={this.title}/>
                     <div className="time" ref={this.time}/>
