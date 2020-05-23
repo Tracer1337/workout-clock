@@ -38,9 +38,9 @@ class Table extends React.Component {
                 <table>
                     <tbody>
                         <tr>
-                            <th>Übung</th>
-                            <th>Zeit</th>
-                            <th>Pause</th>
+                            <th>Exercise</th>
+                            <th>Duration</th>
+                            <th>Rest</th>
                         </tr>
 
                         {this.props.data.map(({ label, duration, pause }, i) => (
